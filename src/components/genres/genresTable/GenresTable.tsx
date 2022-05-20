@@ -1,8 +1,7 @@
-import { FC } from 'react'
+import { FC, useCallback } from 'react'
 import { browseRoutes } from '../../../core/config'
 import { DataTable } from '../../common'
-import ActionCell from '../../common/dataTable/ActionCell'
-import { DataTableHeaderColumnProps } from '../../common/dataTable/DataTableHead'
+import { DataTableHeaderColumnProps } from '../../common/dataTable/data-table.interfaces'
 import { useGenres } from '../useGenres'
 
 const columns: DataTableHeaderColumnProps[] = [
@@ -25,35 +24,36 @@ const columns: DataTableHeaderColumnProps[] = [
 ]
 
 const GenresTable: FC = () => {
-  const { data, isLoading, page, setPage } = useGenres()
+  const { data, isLoading, isFetching, page, setPage } = useGenres()
 
-  // const actionCell = {
-  //   width: 140,
-  //   field: 'action',
-  //   headerName: '',
-  //   hideable: false,
-  //   sortable: false,
-  //   editable: false,
-  //   groupable: false,
-  //   filterable: false,
-  //   pinnable: false,
-  //   disableColumnMenu: true,
-  //   renderCell: (cellValues) => {
-  //     const { id } = cellValues.row
-  //     return (
-  //       <ActionCell editUrl={browseRoutes.genreEdit(id)} viewUrl={browseRoutes.genreView(id)} deleteAction={true} />
-  //     )
-  //   },
-  // }
+  const handlePageChange = useCallback(
+    (_: unknown, newPage: number) => {
+      setPage(Number(newPage) + 1)
+    },
+    [setPage]
+  )
 
   return (
     <DataTable
       rows={data?.items || []}
-      rowCount={data?.total || 0}
+      total={data?.total || 0}
+      limit={data?.limit || 10}
       columns={columns}
       loading={isLoading}
+      fetching={isFetching}
       page={Number(page) - 1}
-      onPageChange={(newPage) => setPage(Number(newPage) + 1)}
+      onPageChange={handlePageChange}
+      actions={{
+        view: {
+          field: 'id',
+          url: browseRoutes.genreView(''),
+        },
+        edit: {
+          field: 'id',
+          url: browseRoutes.genreEdit(''),
+        },
+        canDelete: true,
+      }}
     />
   )
 }

@@ -1,12 +1,12 @@
 import { FC } from 'react'
 import { MainLayout } from '../../../layouts'
 
-const ArtistsIndexPage: FC = () => {
+const TrackViewPage: FC = () => {
   return (
     <MainLayout>
-      <div>ArtistsIndexPage</div>
+      <div>TrackViewPage</div>
     </MainLayout>
   )
 }
 
-export default ArtistsIndexPage
+export default TrackViewPage

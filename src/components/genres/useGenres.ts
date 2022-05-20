@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import { GenreService } from '../../core/services/genre.service'
 
@@ -10,11 +10,15 @@ export const useGenres = () => {
     onError: (error) => {
       console.log(JSON.stringify(error))
     },
+    keepPreviousData: true,
   })
 
-  return {
-    page,
-    setPage,
-    ...queryData,
-  }
+  return useMemo(
+    () => ({
+      page,
+      setPage,
+      ...queryData,
+    }),
+    [page, setPage, queryData]
+  )
 }

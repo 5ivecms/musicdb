@@ -1,24 +1,7 @@
 import { Box, Checkbox, TableCell, TableHead, TableRow, TableSortLabel } from '@mui/material'
-import { ChangeEvent, FC, MouseEvent } from 'react'
+import { FC, MouseEvent } from 'react'
 import { visuallyHidden } from '@mui/utils'
-
-type Order = 'asc' | 'desc'
-
-export interface DataTableHeaderColumnProps {
-  field: string
-  headerName: string
-  numeric: boolean
-}
-
-interface DataTableHeadProps {
-  columns: DataTableHeaderColumnProps[]
-  numSelected: number
-  onRequestSort: (event: MouseEvent<unknown>, property: any) => void
-  onSelectAllClick: (event: ChangeEvent<HTMLInputElement>) => void
-  order: Order
-  orderBy: string
-  rowCount: number
-}
+import { DataTableHeadProps } from './data-table.interfaces'
 
 const DataTableHead: FC<DataTableHeadProps> = ({
   columns,
@@ -67,6 +50,7 @@ const DataTableHead: FC<DataTableHeadProps> = ({
             </TableSortLabel>
           </TableCell>
         ))}
+        <TableCell width={120}></TableCell>
       </TableRow>
     </TableHead>
   )

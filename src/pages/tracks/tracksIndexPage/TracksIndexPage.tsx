@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import MainLayout from '../../../layouts/MainLayout'
+import { MainLayout } from '../../../layouts'
 
 const TracksIndexPage: FC = () => {
   return (
