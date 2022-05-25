@@ -1,42 +1,26 @@
-import { Box, Checkbox, TableCell, TableHead, TableRow, TableSortLabel } from '@mui/material'
-import { FC, MouseEvent } from 'react'
+import { Box, TableCell, TableHead, TableRow, TableSortLabel } from '@mui/material'
+import { FC, memo, MouseEvent } from 'react'
 import { visuallyHidden } from '@mui/utils'
+import { grey } from '@mui/material/colors'
 import { DataTableHeadProps } from './data-table.interfaces'
 
-const DataTableHead: FC<DataTableHeadProps> = ({
-  columns,
-  numSelected,
-  onRequestSort,
-  onSelectAllClick,
-  order,
-  orderBy,
-  rowCount,
-}) => {
+const DataTableHead: FC<DataTableHeadProps> = ({ columns, onRequestSort, order, orderBy }) => {
   const createSortHandler = (property: any) => (event: MouseEvent<unknown>) => {
     onRequestSort(event, property)
   }
-
   return (
     <TableHead>
-      <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all desserts',
-            }}
-          />
-        </TableCell>
+      <TableRow sx={{ backgroundColor: grey[100] }}>
+        <TableCell></TableCell>
         {columns.map((column) => (
           <TableCell
+            sx={{ width: column.width && column.width, boxSizing: 'border-box' }}
             key={column.field}
             align={column.numeric ? 'right' : 'left'}
             sortDirection={orderBy === column.field ? order : false}
           >
             <TableSortLabel
+              sx={{ fontWeight: 'bold' }}
               active={orderBy === column.field}
               direction={orderBy === column.field ? order : 'asc'}
               onClick={createSortHandler(column.field)}
@@ -56,4 +40,4 @@ const DataTableHead: FC<DataTableHeadProps> = ({
   )
 }
 
-export default DataTableHead
+export default memo(DataTableHead)

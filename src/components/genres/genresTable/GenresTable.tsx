@@ -1,11 +1,11 @@
-import { FC, useCallback } from 'react'
-import { browseRoutes } from '../../../core/config'
+import { FC } from 'react'
+import { genresBrowseRoutes } from '../../../core/config'
 import { DataTable } from '../../common'
-import { DataTableHeaderColumnProps } from '../../common/dataTable/data-table.interfaces'
+import { DataTableActions, DataTableHeaderColumnProps } from '../../common/dataTable/data-table.interfaces'
 import { useGenres } from '../useGenres'
 
 const columns: DataTableHeaderColumnProps[] = [
-  { field: 'id', headerName: 'ID', numeric: false },
+  { field: 'id', headerName: 'ID', numeric: false, width: '150px' },
   {
     field: 'name',
     headerName: 'Название',
@@ -23,37 +23,52 @@ const columns: DataTableHeaderColumnProps[] = [
   },
 ]
 
-const GenresTable: FC = () => {
-  const { data, isLoading, isFetching, page, setPage } = useGenres()
+const actions: DataTableActions = {
+  view: {
+    field: 'id',
+    url: genresBrowseRoutes.view(''),
+  },
+  edit: {
+    field: 'id',
+    url: genresBrowseRoutes.edit(''),
+  },
+  canDelete: true,
+}
 
-  const handlePageChange = useCallback(
-    (_: unknown, newPage: number) => {
-      setPage(Number(newPage) + 1)
-    },
-    [setPage]
-  )
+const GenresTable: FC = () => {
+  const {
+    data,
+    isLoading,
+    isFetching,
+    page,
+    setPage,
+    order,
+    orderBy,
+    setOrder,
+    setOrderBy,
+    search,
+    setSearch,
+    refresh,
+  } = useGenres()
 
   return (
     <DataTable
+      loading={isLoading}
+      fetching={isFetching}
       rows={data?.items || []}
       total={data?.total || 0}
       limit={data?.limit || 10}
       columns={columns}
-      loading={isLoading}
-      fetching={isFetching}
-      page={Number(page) - 1}
-      onPageChange={handlePageChange}
-      actions={{
-        view: {
-          field: 'id',
-          url: browseRoutes.genreView(''),
-        },
-        edit: {
-          field: 'id',
-          url: browseRoutes.genreEdit(''),
-        },
-        canDelete: true,
-      }}
+      page={Number(page)}
+      setPage={setPage}
+      order={order}
+      setOrder={setOrder}
+      orderBy={orderBy}
+      setOrderBy={setOrderBy}
+      search={search}
+      setSearch={setSearch}
+      actions={actions}
+      onRefresh={refresh}
     />
   )
 }

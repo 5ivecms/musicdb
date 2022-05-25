@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { browseRoutes } from '../core/config'
+import { artistsBrowseRoutes, genresBrowseRoutes, releasesBrowseRoutes, tracksBrowseRoutes } from '../core/config'
 import {
   ArtistsIndexPage,
   GenreCreatePage,
@@ -17,14 +17,14 @@ const AppRouter: FC = () => {
     <Routes>
       <Route path="*" element={<NotFoundPage />} />
 
-      <Route path={browseRoutes.genres()} element={<GenreIndexPage />} />
-      <Route path={browseRoutes.genreView()} element={<GenreViewPage />} />
-      <Route path={browseRoutes.genreCreate()} element={<GenreCreatePage />} />
-      <Route path={browseRoutes.genreEdit()} element={<GenreEditPage />} />
+      <Route path={genresBrowseRoutes.index()} element={<GenreIndexPage />} />
+      <Route path={genresBrowseRoutes.view()} element={<GenreViewPage />} />
+      <Route path={genresBrowseRoutes.create()} element={<GenreCreatePage />} />
+      <Route path={genresBrowseRoutes.edit()} element={<GenreEditPage />} />
 
-      <Route path={browseRoutes.releases()} element={<ReleasesIndexPage />} />
-      <Route path={browseRoutes.artists()} element={<ArtistsIndexPage />} />
-      <Route path={browseRoutes.tracks()} element={<TracksIndexPage />} />
+      <Route path={releasesBrowseRoutes.index()} element={<ReleasesIndexPage />} />
+      <Route path={artistsBrowseRoutes.index()} element={<ArtistsIndexPage />} />
+      <Route path={tracksBrowseRoutes.index()} element={<TracksIndexPage />} />
     </Routes>
   )
 }

@@ -1,21 +1,21 @@
-import { browseRoutes } from '../../../core/config'
+import { artistsBrowseRoutes, genresBrowseRoutes, releasesBrowseRoutes, tracksBrowseRoutes } from '../../../core/config'
 import { IHeaderMenuItem } from './header.interfaces'
 
 export const headerMenu: IHeaderMenuItem[] = [
   {
     title: 'Релизы',
-    url: browseRoutes.releases(),
+    url: releasesBrowseRoutes.index(),
   },
   {
     title: 'Треки',
-    url: browseRoutes.tracks(),
+    url: tracksBrowseRoutes.index(),
   },
   {
     title: 'Исполнители',
-    url: browseRoutes.artists(),
+    url: artistsBrowseRoutes.index(),
   },
   {
     title: 'Жанры',
-    url: browseRoutes.genres(),
+    url: genresBrowseRoutes.index(),
   },
 ]
