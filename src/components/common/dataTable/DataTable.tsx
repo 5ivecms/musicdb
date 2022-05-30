@@ -39,6 +39,8 @@ const DataTable: FC<DataTableProps> = ({
   setSearch,
   actions = {},
   onRefresh,
+  onDelete,
+  onDeleteMany,
 }) => {
   const fields = useMemo(() => columns.map((column) => column.field), [columns])
   const [selected, setSelected] = useState<number[]>([])
@@ -105,8 +107,8 @@ const DataTable: FC<DataTableProps> = ({
   }, [setSearch])
 
   const toggleDeleteDialog = useCallback(() => {
-    setDeleteDialogOpen(!deleteDialogOpen)
-  }, [deleteDialogOpen])
+    setDeleteDialogOpen((prevState) => !prevState)
+  }, [])
 
   const handleDelete = useCallback(
     (id: number) => {
@@ -117,18 +119,21 @@ const DataTable: FC<DataTableProps> = ({
   )
 
   const deleteConfirm = useCallback(() => {
-    toggleDeleteDialog()
-    console.log(`удаляем ${deleteItemId}`)
-  }, [deleteItemId, toggleDeleteDialog])
+    if (deleteItemId) {
+      toggleDeleteDialog()
+      onDelete(deleteItemId)
+    }
+  }, [deleteItemId, toggleDeleteDialog, onDelete])
 
   const toggleDeleteManyDialog = useCallback(() => {
-    setDeleteManyDialogOpen(!deleteManyDialogOpen)
-  }, [deleteManyDialogOpen])
+    setDeleteManyDialogOpen((prevState) => !prevState)
+  }, [])
 
   const confirmDeleteMany = useCallback(() => {
+    onDeleteMany(selected.join(','))
+    setSelected([])
     toggleDeleteManyDialog()
-    console.log('удаляем', String(selected))
-  }, [selected, toggleDeleteManyDialog])
+  }, [toggleDeleteManyDialog, onDeleteMany, setSelected, selected])
 
   return (
     <>
@@ -155,7 +160,7 @@ const DataTable: FC<DataTableProps> = ({
                         inputProps={{ 'aria-label': 'select all desserts' }}
                       />
                     </TableCell>
-                    <DataTableFilter onSearch={handleSearch} />
+                    <DataTableFilter onSearch={handleSearch} columns={columns} />
                     <TableCell sx={{ py: 1 }}>
                       <Box sx={subActionsContainer}>
                         <Box sx={subAction}>

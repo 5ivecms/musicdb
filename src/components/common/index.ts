@@ -1,2 +1,5 @@
 export { default as DataTable } from './dataTable/DataTable'
 export { default as FormTable } from './formTable/FormTable'
+export { default as InfoTable } from './infoTable/InfoTable'
+export { default as PageContent } from './pageContent/PageContent'
+export { default as Preloader } from './preloader/Preloader'

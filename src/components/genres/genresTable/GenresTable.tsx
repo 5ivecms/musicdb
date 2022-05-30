@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useCallback } from 'react'
 import { genresBrowseRoutes } from '../../../core/config'
 import { DataTable } from '../../common'
 import { DataTableActions, DataTableHeaderColumnProps } from '../../common/dataTable/data-table.interfaces'
@@ -6,6 +6,7 @@ import { useGenres } from '../useGenres'
 
 const columns: DataTableHeaderColumnProps[] = [
   { field: 'id', headerName: 'ID', numeric: false, width: '150px' },
+  { field: 'parentId', headerName: 'parentID', numeric: false, width: '150px' },
   {
     field: 'name',
     headerName: 'Название',
@@ -49,7 +50,23 @@ const GenresTable: FC = () => {
     search,
     setSearch,
     refresh,
+    deleteGenre,
+    deleteGenres,
   } = useGenres()
+
+  const handleDelete = useCallback(
+    async (id: number) => {
+      await deleteGenre(id)
+    },
+    [deleteGenre]
+  )
+
+  const handleDeleteMany = useCallback(
+    async (ids: string) => {
+      await deleteGenres(ids)
+    },
+    [deleteGenres]
+  )
 
   return (
     <DataTable
@@ -69,6 +86,8 @@ const GenresTable: FC = () => {
       setSearch={setSearch}
       actions={actions}
       onRefresh={refresh}
+      onDelete={handleDelete}
+      onDeleteMany={handleDeleteMany}
     />
   )
 }

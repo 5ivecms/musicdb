@@ -1,5 +1,5 @@
-import { useCallback, useMemo, useState } from 'react'
 import { useMutation, useQuery } from 'react-query'
+import { useCallback, useMemo, useState } from 'react'
 import { useDebounce } from '../../core/hooks'
 import { GenreService } from '../../core/services/genre.service'
 import { Order } from '../common/dataTable/data-table.interfaces'
@@ -33,6 +33,20 @@ export const useGenres = () => {
     },
   })
 
+  const { mutateAsync: deleteGenres } = useMutation(
+    'delete many genres',
+    (ids: string) => GenreService.deleteMany(ids),
+    {
+      onError: (error) => {
+        console.log(JSON.stringify(error))
+      },
+      onSuccess: () => {
+        console.log('жанры удалены')
+        queryData.refetch()
+      },
+    }
+  )
+
   const refresh = useCallback(() => {
     queryData.refetch()
   }, [queryData])
@@ -48,9 +62,23 @@ export const useGenres = () => {
       search,
       setSearch,
       deleteGenre,
+      deleteGenres,
       refresh,
       ...queryData,
     }),
-    [page, setPage, queryData, order, orderBy, setOrder, setOrderBy, search, setSearch, deleteGenre, refresh]
+    [
+      page,
+      setPage,
+      queryData,
+      order,
+      orderBy,
+      setOrder,
+      setOrderBy,
+      search,
+      setSearch,
+      deleteGenre,
+      deleteGenres,
+      refresh,
+    ]
   )
 }

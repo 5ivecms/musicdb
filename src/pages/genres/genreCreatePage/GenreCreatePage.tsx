@@ -1,7 +1,8 @@
-import { Button } from '@mui/material'
 import { FC } from 'react'
+import { Button } from '@mui/material'
 import { FormTable } from '../../../components/common'
 import { PageHeader, PageTitle } from '../../../components/ui'
+import { useGenresCreate } from '../../../core/hooks'
 import { useZvukApi } from '../../../core/hooks/useZvukApi'
 import { MainLayout } from '../../../layouts'
 
@@ -23,18 +24,19 @@ const columns = [
     field: 'shortName',
     headerName: 'Краткое название',
     numeric: false,
-    required: true,
+    required: false,
   },
   {
     field: 'slug',
     headerName: 'Slug',
     numeric: false,
-    required: true,
+    required: false,
   },
 ]
 
 const GenreCreatePage: FC = () => {
   const { genres, getGenres, isLoading } = useZvukApi()
+  const { createManyGenresAsync, isLoadingCreateMany } = useGenresCreate()
 
   const dataGenres = genres.reduce((acc: any[], item: any) => {
     let subGenres: any[] = []
@@ -48,6 +50,10 @@ const GenreCreatePage: FC = () => {
     return [...acc, newItem, ...subGenres]
   }, [])
 
+  const handleSubmit = async (data: any) => {
+    await createManyGenresAsync(data)
+  }
+
   return (
     <MainLayout>
       <PageHeader
@@ -59,7 +65,12 @@ const GenreCreatePage: FC = () => {
         }
         showBackButton
       />
-      <FormTable columns={columns} rows={dataGenres} loading={isLoading} />
+      <FormTable
+        columns={columns}
+        rows={dataGenres}
+        loading={isLoading || isLoadingCreateMany}
+        onSubmit={handleSubmit}
+      />
     </MainLayout>
   )
 }

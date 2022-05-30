@@ -1,0 +1,35 @@
+import { FC } from 'react'
+import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material'
+import { grey } from '@mui/material/colors'
+import styled from '@emotion/styled'
+
+interface InfoTableProps {
+  columns: any[]
+  data: any
+  thWidth: number
+}
+
+const TableTh = styled(TableCell)(() => ({
+  fontWeight: 'bold',
+  borderRight: `1px solid ${grey[300]}`,
+}))
+
+const InfoTable: FC<InfoTableProps> = ({ data, columns, thWidth }) => {
+  return (
+    <TableContainer component={Paper}>
+      <Table>
+        <TableBody>
+          {columns &&
+            columns.map((column) => (
+              <TableRow key={`info-table-row-${column.field}`}>
+                <TableTh width={thWidth}>{column.field}</TableTh>
+                <TableCell>{column.render ? column.render(data[column.field]) : data[column.field]}</TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  )
+}
+
+export default InfoTable

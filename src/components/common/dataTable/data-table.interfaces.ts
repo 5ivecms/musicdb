@@ -18,6 +18,7 @@ export interface DataTableHeadProps {
 }
 
 export interface DataTableFilterProps {
+  columns: any[]
   onSearch: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -56,6 +57,8 @@ export interface DataTableProps {
   }
   setSearch: (data: { [key: string]: string }) => void
   onRefresh: () => void
+  onDelete: (id: number) => void
+  onDeleteMany: (ids: string) => void
 }
 
 export interface DataTableAction {
