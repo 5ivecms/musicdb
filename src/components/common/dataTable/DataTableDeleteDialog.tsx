@@ -1,23 +1,24 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
-import { FC } from 'react'
-import { DataTableDeleteDialogProps } from './data-table.interfaces'
+import type { FC } from 'react'
+
+import type { DataTableDeleteDialogProps } from './data-table.interfaces'
 
 const DataTableDeleteDialog: FC<DataTableDeleteDialogProps> = ({ open, onClose, onConfirm }) => (
   <Dialog
-    open={open}
-    onClose={onClose}
-    aria-labelledby="alert-dialog-title"
     aria-describedby="alert-dialog-description"
+    aria-labelledby="alert-dialog-title"
+    onClose={onClose}
+    open={open}
   >
     <DialogTitle id="alert-dialog-title">Подтвердите удаление</DialogTitle>
     <DialogContent>
       <DialogContentText id="alert-dialog-description">Точно удалить запись?</DialogContentText>
     </DialogContent>
     <DialogActions>
-      <Button variant="outlined" onClick={onClose}>
+      <Button onClick={onClose} variant="outlined">
         Нет
       </Button>
-      <Button variant="contained" color="error" onClick={onConfirm} autoFocus>
+      <Button color="error" onClick={onConfirm} variant="contained" autoFocus>
         Да
       </Button>
     </DialogActions>

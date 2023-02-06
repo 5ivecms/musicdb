@@ -1,5 +1,6 @@
 import { Box, Container } from '@mui/material'
-import { FC, ReactNode } from 'react'
+import type { FC, ReactNode } from 'react'
+
 import { Header } from '../components/ui'
 
 interface MainLayoutProps {
@@ -8,7 +9,7 @@ interface MainLayoutProps {
 
 const MainLayout: FC<MainLayoutProps> = ({ children }) => {
   return (
-    <Box>
+    <Box sx={{ paddingBottom: '100px' }}>
       <Header />
       <Container maxWidth="xl">{children}</Container>
     </Box>

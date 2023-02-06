@@ -1,12 +1,18 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Checkbox, TableCell, TableRow } from '@mui/material'
-import { FC, memo } from 'react'
+import type { FC } from 'react'
+import { memo } from 'react'
+
 import ActionCell from './ActionCell'
-import { DataTableRowProps } from './data-table.interfaces'
+import type { DataTableRowProps } from './data-table.interfaces'
 
 const DataTableRow: FC<DataTableRowProps> = ({ fields, actions = {}, row, onSelect, selected, onDelete, ...rest }) => (
-  <TableRow hover role="checkbox" tabIndex={-1} aria-checked={selected} selected={selected} {...rest}>
+  <TableRow aria-checked={selected} role="checkbox" selected={selected} tabIndex={-1} hover {...rest}>
     <TableCell padding="checkbox">
-      <Checkbox color="primary" onClick={onSelect(row.id)} checked={selected} />
+      <Checkbox checked={selected} color="primary" onClick={onSelect(row.id)} />
     </TableCell>
     {fields.map((field) => {
       return <TableCell key={`row-${field}`}>{row[field]}</TableCell>
@@ -14,11 +20,11 @@ const DataTableRow: FC<DataTableRowProps> = ({ fields, actions = {}, row, onSele
     {Object.keys(actions) && (
       <TableCell width={120}>
         <ActionCell
-          itemId={row.id}
           deleteAction={actions?.canDelete}
-          viewUrl={actions?.view && `${actions?.view?.url}${row[actions?.view?.field]}`}
           editUrl={actions?.edit && `${actions?.edit?.url}${row[actions?.edit?.field]}`}
+          itemId={row.id}
           onDelete={onDelete}
+          viewUrl={actions?.view && `${actions?.view?.url}${row[actions?.view?.field]}`}
         />
       </TableCell>
     )}

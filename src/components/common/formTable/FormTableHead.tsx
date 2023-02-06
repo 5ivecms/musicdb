@@ -1,13 +1,15 @@
-import { ChangeEvent, FC } from 'react'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Checkbox, TableCell, TableHead, TableRow } from '@mui/material'
-
 import { grey } from '@mui/material/colors'
+import type { ChangeEvent, FC } from 'react'
 
 interface FormTableHeadProps {
+  checkboxChecked: boolean
+  checkboxIndeterminate: boolean
   columns: any[]
   onSelectAll: (event: ChangeEvent<HTMLInputElement>) => void
-  checkboxIndeterminate: boolean
-  checkboxChecked: boolean
 }
 
 const FormTableHead: FC<FormTableHeadProps> = ({ columns, onSelectAll, checkboxIndeterminate, checkboxChecked }) => {
@@ -16,20 +18,20 @@ const FormTableHead: FC<FormTableHeadProps> = ({ columns, onSelectAll, checkboxI
       <TableRow sx={{ backgroundColor: grey[100] }}>
         <TableCell padding="checkbox">
           <Checkbox
+            checked={checkboxChecked}
             color="primary"
             indeterminate={checkboxIndeterminate}
-            checked={checkboxChecked}
-            onChange={onSelectAll}
             inputProps={{
               'aria-label': 'select all desserts',
             }}
+            onChange={onSelectAll}
           />
         </TableCell>
         {columns.map((column) => (
           <TableCell
-            sx={{ width: column.width && column.width, boxSizing: 'border-box', fontWeight: 'bold' }}
             key={column.field}
             align={column.numeric ? 'right' : 'left'}
+            sx={{ boxSizing: 'border-box', fontWeight: 'bold', width: column.width && column.width }}
           >
             {column.headerName}
           </TableCell>

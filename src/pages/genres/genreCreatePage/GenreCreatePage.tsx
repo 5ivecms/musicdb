@@ -1,5 +1,12 @@
-import { FC } from 'react'
-import { Button } from '@mui/material'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { Box, Button, CircularProgress } from '@mui/material'
+import type { FC } from 'react'
+
 import { FormTable } from '../../../components/common'
 import { PageHeader, PageTitle } from '../../../components/ui'
 import { useGenresCreate } from '../../../core/hooks'
@@ -7,7 +14,7 @@ import { useZvukApi } from '../../../core/hooks/useZvukApi'
 import { MainLayout } from '../../../layouts'
 
 const columns = [
-  { field: 'sourceId', headerName: 'sourceId', numeric: false, width: '150px', required: true },
+  { field: 'sourceId', headerName: 'sourceId', numeric: false, required: true, width: '150px' },
   {
     field: 'parentSourceId',
     headerName: 'parentSourceId',
@@ -50,7 +57,7 @@ const GenreCreatePage: FC = () => {
     return [...acc, newItem, ...subGenres]
   }, [])
 
-  const handleSubmit = async (data: any) => {
+  const handleSubmit = async (data: any): Promise<void> => {
     await createManyGenresAsync(data)
   }
 
@@ -59,7 +66,7 @@ const GenreCreatePage: FC = () => {
       <PageHeader
         left={<PageTitle title="Добавить жанры" />}
         right={
-          <Button variant="contained" onClick={() => getGenres()}>
+          <Button onClick={() => getGenres()} variant="contained">
             Получить
           </Button>
         }
@@ -67,10 +74,16 @@ const GenreCreatePage: FC = () => {
       />
       <FormTable
         columns={columns}
-        rows={dataGenres}
         loading={isLoading || isLoadingCreateMany}
         onSubmit={handleSubmit}
+        rows={dataGenres}
       />
+
+      {isLoading && (
+        <Box sx={{ display: isLoading ? 'none' : 'flex', justifyContent: 'center', my: 3 }}>
+          <CircularProgress size={40} thickness={4} value={100} />
+        </Box>
+      )}
     </MainLayout>
   )
 }

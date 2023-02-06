@@ -1,26 +1,34 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable unicorn/no-null */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Delete, FilterAltOff, Refresh } from '@mui/icons-material'
 import {
   Box,
+  Checkbox,
   CircularProgress,
+  IconButton,
   Paper,
   Table,
   TableBody,
-  TableHead,
-  TableRow,
   TableCell,
   TableContainer,
-  Checkbox,
-  IconButton,
+  TableHead,
+  TableRow,
 } from '@mui/material'
-import { ChangeEvent, FC, MouseEvent, useCallback, useMemo, useState } from 'react'
-import { DataTableProps } from './data-table.interfaces'
+import type { ChangeEvent, FC, MouseEvent } from 'react'
+import { useCallback, useMemo, useState } from 'react'
+
+import type { DataTableProps } from './data-table.interfaces'
 import DataTableDeleteDialog from './DataTableDeleteDialog'
 import DataTableDeleteManyDialog from './DataTableDeleteManyDialog'
 import DataTableFilter from './DataTableFilter'
 import DataTableHead from './DataTableHead'
 import DataTablePagination from './DataTablePagination'
 import DataTableRow from './DataTableRow'
-import { circularProgressFetching, fetchingSx, subActionsContainer, preloaderContainer, subAction } from './style.sx'
+import { circularProgressFetching, fetchingSx, preloaderContainer, subAction, subActionsContainer } from './style.sx'
 
 const DataTable: FC<DataTableProps> = ({
   rows,
@@ -143,41 +151,41 @@ const DataTable: FC<DataTableProps> = ({
             <TableContainer>
               <Table aria-labelledby="Data table">
                 <DataTableHead
+                  actions={Object.keys(actions).length > 0}
                   columns={columns}
+                  onRequestSort={handleRequestSort}
                   order={order}
                   orderBy={orderBy}
-                  onRequestSort={handleRequestSort}
-                  actions={Object.keys(actions).length > 0}
                 />
                 <TableHead>
                   <TableRow>
                     <TableCell padding="checkbox">
                       <Checkbox
+                        checked={limit > 0 && selected.length === limit}
                         color="primary"
                         indeterminate={selected.length > 0 && selected.length < limit}
-                        checked={limit > 0 && selected.length === limit}
-                        onChange={onSelectAll}
                         inputProps={{ 'aria-label': 'select all desserts' }}
+                        onChange={onSelectAll}
                       />
                     </TableCell>
-                    <DataTableFilter onSearch={handleSearch} columns={columns} />
+                    <DataTableFilter columns={columns} onSearch={handleSearch} />
                     <TableCell sx={{ py: 1 }}>
                       <Box sx={subActionsContainer}>
                         <Box sx={subAction}>
                           {Object.keys(search).length > 0 && (
-                            <IconButton color="default" aria-label="reset filter" onClick={handleResetFilter}>
+                            <IconButton aria-label="reset filter" color="default" onClick={handleResetFilter}>
                               <FilterAltOff />
                             </IconButton>
                           )}
                         </Box>
                         <Box sx={subAction}>
-                          <IconButton color="default" aria-label="refresh" onClick={onRefresh}>
+                          <IconButton aria-label="refresh" color="default" onClick={onRefresh}>
                             <Refresh />
                           </IconButton>
                         </Box>
                         <Box sx={subAction}>
                           {selected.length > 0 && (
-                            <IconButton color="error" aria-label="delete selected" onClick={toggleDeleteManyDialog}>
+                            <IconButton aria-label="delete selected" color="error" onClick={toggleDeleteManyDialog}>
                               <Delete />
                             </IconButton>
                           )}
@@ -189,22 +197,22 @@ const DataTable: FC<DataTableProps> = ({
                 <TableBody>
                   {rows.map((row) => (
                     <DataTableRow
-                      selected={isSelected(row.id)}
-                      fields={fields}
-                      row={row}
-                      actions={actions}
-                      onSelect={onSelect}
                       key={row.id}
+                      actions={actions}
+                      fields={fields}
                       onDelete={handleDelete}
+                      onSelect={onSelect}
+                      row={row}
+                      selected={isSelected(row.id)}
                     />
                   ))}
                 </TableBody>
               </Table>
             </TableContainer>
-            <DataTablePagination total={total} limit={limit} page={page} onPageChange={handlePageChange} />
+            <DataTablePagination limit={limit} onPageChange={handlePageChange} page={page} total={total} />
           </Paper>
         )}
-        {!loading && fetching && <CircularProgress sx={circularProgressFetching} size={50} />}
+        {!loading && fetching && <CircularProgress size={50} sx={circularProgressFetching} />}
       </Box>
 
       {loading && (
@@ -213,11 +221,11 @@ const DataTable: FC<DataTableProps> = ({
         </Box>
       )}
 
-      <DataTableDeleteDialog open={deleteDialogOpen} onClose={toggleDeleteDialog} onConfirm={deleteConfirm} />
+      <DataTableDeleteDialog onClose={toggleDeleteDialog} onConfirm={deleteConfirm} open={deleteDialogOpen} />
       <DataTableDeleteManyDialog
-        open={deleteManyDialogOpen}
         onClose={toggleDeleteManyDialog}
         onConfirm={confirmDeleteMany}
+        open={deleteManyDialogOpen}
       />
     </>
   )

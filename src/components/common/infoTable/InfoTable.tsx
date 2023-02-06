@@ -1,7 +1,11 @@
-import { FC } from 'react'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+import styled from '@emotion/styled'
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material'
 import { grey } from '@mui/material/colors'
-import styled from '@emotion/styled'
+import type { FC } from 'react'
 
 interface InfoTableProps {
   columns: any[]
@@ -10,8 +14,8 @@ interface InfoTableProps {
 }
 
 const TableTh = styled(TableCell)(() => ({
-  fontWeight: 'bold',
   borderRight: `1px solid ${grey[300]}`,
+  fontWeight: 'bold',
 }))
 
 const InfoTable: FC<InfoTableProps> = ({ data, columns, thWidth }) => {

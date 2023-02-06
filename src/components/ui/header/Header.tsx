@@ -1,40 +1,39 @@
-import { FC } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Container from '@mui/material/Container'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
-import Container from '@mui/material/Container'
-import Button from '@mui/material/Button'
-import AdbIcon from '@mui/icons-material/Adb'
-import { headerMenu } from './header.data'
+import type { FC } from 'react'
 import { Link } from 'react-router-dom'
+
+import { headerMenu } from './header.data'
 
 const Header: FC = () => {
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ justifyContent: 'start' }}>
-          <AdbIcon sx={{ display: 'flex', mr: 1 }} />
+        <Toolbar sx={{ justifyContent: 'start' }} disableGutters>
+          {/* <AdbIcon sx={{ display: 'flex', mr: 1 }} /> */}
           <Typography
-            variant="h6"
-            noWrap
             component="a"
             href="/"
             sx={{
-              mr: 2,
+              color: 'inherit',
               display: 'flex',
               fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: '.125rem',
-              color: 'inherit',
+              mr: 2,
               textDecoration: 'none',
             }}
+            variant="h6"
+            noWrap
           >
-            MusicDB
+            5ivelab.Music
           </Typography>
-          <Box sx={{ flexGrow: 1, display: 'flex' }}>
+          <Box sx={{ display: 'flex', flexGrow: 1 }}>
             {headerMenu.map((item) => (
-              <Button key={item.url} sx={{ my: 2, color: 'white', display: 'block' }} component={Link} to={item.url}>
+              <Button key={item.url} component={Link} sx={{ color: 'white', display: 'block', my: 2 }} to={item.url}>
                 {item.title}
               </Button>
             ))}

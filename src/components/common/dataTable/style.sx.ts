@@ -1,12 +1,12 @@
-import { SxProps } from '@mui/material'
+import type { SxProps } from '@mui/material'
 
 export const paginationContainer: SxProps = {
-  display: 'flex',
-  width: '100%',
-  justifyContent: 'space-between',
   alignContent: 'center',
   alignItems: 'center',
+  display: 'flex',
+  justifyContent: 'space-between',
   py: 2,
+  width: '100%',
 }
 
 export const paginationStat: SxProps = {
@@ -14,33 +14,33 @@ export const paginationStat: SxProps = {
 }
 
 export const circularProgressFetching: SxProps = {
-  position: 'absolute',
-  top: 0,
-  right: 0,
   bottom: 0,
   left: 0,
-  zIndex: 3,
   m: 'auto',
+  position: 'absolute',
+  right: 0,
+  top: 0,
+  zIndex: 3,
 }
 
 export const fetchingSx: SxProps = {
-  position: 'relative',
   '&:before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    bottom: 0,
+    content: '""',
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 0,
     zIndex: 2,
   },
+  position: 'relative',
 }
 
 export const subActionsContainer: SxProps = {
   display: 'flex',
-  width: '100%',
   justifyContent: 'space-between',
+  width: '100%',
 }
 
 export const subAction: SxProps = {
@@ -48,7 +48,7 @@ export const subAction: SxProps = {
 }
 
 export const preloaderContainer: SxProps = {
-  width: '100%',
   display: 'flex',
   justifyContent: 'center',
+  width: '100%',
 }

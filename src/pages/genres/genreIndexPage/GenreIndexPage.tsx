@@ -1,11 +1,12 @@
-import { FC } from 'react'
-import { Link } from 'react-router-dom'
-import { Button } from '@mui/material'
 import { Add } from '@mui/icons-material'
-import { MainLayout } from '../../../layouts'
+import { Button } from '@mui/material'
+import type { FC } from 'react'
+import { Link } from 'react-router-dom'
+
 import { GenresTable } from '../../../components/genres'
 import { PageHeader, PageTitle } from '../../../components/ui'
 import { genresBrowseRoutes } from '../../../core/config'
+import { MainLayout } from '../../../layouts'
 
 const GenreIndexPage: FC = () => {
   return (
@@ -13,7 +14,7 @@ const GenreIndexPage: FC = () => {
       <PageHeader
         left={<PageTitle title="Список жанров" />}
         right={
-          <Button variant="contained" component={Link} to={genresBrowseRoutes.create()} endIcon={<Add />}>
+          <Button component={Link} endIcon={<Add />} to={genresBrowseRoutes.create()} variant="contained">
             Добавить
           </Button>
         }

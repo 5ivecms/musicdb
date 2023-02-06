@@ -1,7 +1,11 @@
-import { FC, useCallback } from 'react'
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import type { FC } from 'react'
+import { useCallback } from 'react'
+
 import { genresBrowseRoutes } from '../../../core/config'
 import { DataTable } from '../../common'
-import { DataTableActions, DataTableHeaderColumnProps } from '../../common/dataTable/data-table.interfaces'
+import type { DataTableActions, DataTableHeaderColumnProps } from '../../common/dataTable/data-table.interfaces'
 import { useGenres } from '../useGenres'
 
 const columns: DataTableHeaderColumnProps[] = [
@@ -25,15 +29,15 @@ const columns: DataTableHeaderColumnProps[] = [
 ]
 
 const actions: DataTableActions = {
-  view: {
-    field: 'id',
-    url: genresBrowseRoutes.view(''),
-  },
+  canDelete: true,
   edit: {
     field: 'id',
     url: genresBrowseRoutes.edit(''),
   },
-  canDelete: true,
+  view: {
+    field: 'id',
+    url: genresBrowseRoutes.view(''),
+  },
 }
 
 const GenresTable: FC = () => {
@@ -70,24 +74,24 @@ const GenresTable: FC = () => {
 
   return (
     <DataTable
-      loading={isLoading}
-      fetching={isFetching}
-      rows={data?.items || []}
-      total={data?.total || 0}
-      limit={data?.limit || 10}
-      columns={columns}
-      page={Number(page)}
-      setPage={setPage}
-      order={order}
-      setOrder={setOrder}
-      orderBy={orderBy}
-      setOrderBy={setOrderBy}
-      search={search}
-      setSearch={setSearch}
       actions={actions}
-      onRefresh={refresh}
+      columns={columns}
+      fetching={isFetching}
+      limit={data?.limit || 10}
+      loading={isLoading}
       onDelete={handleDelete}
       onDeleteMany={handleDeleteMany}
+      onRefresh={refresh}
+      order={order}
+      orderBy={orderBy}
+      page={Number(page)}
+      rows={data?.items || []}
+      search={search}
+      setOrder={setOrder}
+      setOrderBy={setOrderBy}
+      setPage={setPage}
+      setSearch={setSearch}
+      total={data?.total || 0}
     />
   )
 }

@@ -1,11 +1,11 @@
 export interface GenreModel {
   id: number
-  parentId: number
   name: string
-  slug: string
-  shortName: string
-  sourceId: number
+  parentId: number
   parentSourceId: number
+  shortName: string
+  slug: string
+  sourceId: number
 }
 
 export interface CreateManyGenresDto {
@@ -13,11 +13,12 @@ export interface CreateManyGenresDto {
   name: string
   parentSourceId: number
   sourceId: number
-  sub?: {
-    [key: string]: {
+  sub?: Record<
+    string,
+    {
       id: number
       name: string
       shortName: string
     }
-  }
+  >
 }

@@ -1,11 +1,12 @@
-import { FC, ReactNode } from 'react'
 import { Box } from '@mui/material'
+import type { FC, ReactNode } from 'react'
+
 import Preloader from '../preloader/Preloader'
 import { style } from './style.sx'
 
 interface PageContentProps {
-  loading: boolean
   children: ReactNode
+  loading: boolean
 }
 
 const PageContent: FC<PageContentProps> = ({ loading, children }) => {

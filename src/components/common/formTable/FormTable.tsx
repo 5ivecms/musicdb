@@ -1,17 +1,21 @@
-import { ChangeEvent, MouseEvent, FC, useCallback, useState } from 'react'
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Box, Button, Paper, Table, TableBody, TableContainer } from '@mui/material'
-import FormTableHead from './FormTableHead'
+import type { ChangeEvent, FC, MouseEvent } from 'react'
+import { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
+
+import type { FormTableProps } from './form-table.interfaces'
+import FormTableHead from './FormTableHead'
 import FormTableRow from './FormTableRow'
 
-interface FormTableProps {
-  columns: any[]
-  rows: any[]
-  loading: boolean
-  onSubmit: <T>(data: T) => void
-}
-
-const FormTable: FC<FormTableProps> = ({ columns, rows, loading, onSubmit }) => {
+const FormTable: FC<FormTableProps> = ({ columns, rows, loading, onSubmit, addRowProps }) => {
   const [selected, setSelected] = useState<number[]>([])
   const {
     handleSubmit,
@@ -58,30 +62,39 @@ const FormTable: FC<FormTableProps> = ({ columns, rows, loading, onSubmit }) => 
         <TableContainer>
           <Table aria-labelledby="Form table" size="medium">
             <FormTableHead
+              checkboxChecked={rows.length > 0 && selected.length === rows.length}
+              checkboxIndeterminate={selected.length > 0 && selected.length < rows.length}
               columns={columns}
               onSelectAll={onSelectAll}
-              checkboxIndeterminate={selected.length > 0 && selected.length < rows.length}
-              checkboxChecked={rows.length > 0 && selected.length === rows.length}
             />
             <TableBody>
-              {rows.map((row, rowIndex) => (
-                <FormTableRow
-                  register={register}
-                  onSelect={onSelect}
-                  selected={isSelected(row.id)}
-                  row={row}
-                  errors={errors}
-                  rowIndex={rowIndex}
-                  columns={columns}
-                  key={`row-${row.id}`}
-                />
-              ))}
+              {rows.map((row, rowIndex) => {
+                let props = {}
+
+                if (addRowProps !== undefined) {
+                  props = { ...addRowProps(row) }
+                }
+                return (
+                  <FormTableRow
+                    key={`row-${row.id}`}
+                    columns={columns}
+                    errors={errors}
+                    onSelect={onSelect}
+                    register={register}
+                    row={row}
+                    rowIndex={rowIndex}
+                    selected={isSelected(row.id)}
+                    {...props}
+                  />
+                )
+              })}
             </TableBody>
           </Table>
         </TableContainer>
+
         {rows.length > 0 && (
-          <Box sx={{ display: 'flex', width: '100%', justifyContent: 'flex-end', p: 2, boxSizing: 'border-box' }}>
-            <Button variant="contained" type="submit" disabled={loading}>
+          <Box sx={{ boxSizing: 'border-box', display: 'flex', justifyContent: 'flex-end', p: 2, width: '100%' }}>
+            <Button disabled={loading} type="submit" variant="contained">
               Сохранить
             </Button>
           </Box>

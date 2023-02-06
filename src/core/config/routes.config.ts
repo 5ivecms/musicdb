@@ -1,27 +1,34 @@
 export const genresBrowseRoutes = {
-  index: () => '/genres',
-  create: () => `/genres/create`,
-  view: (to: string | number = ':genreId') => `/genres/view/${to}`,
-  edit: (to: string | number = ':genreId') => `/genres/edit/${to}`,
+  create: (): string => `/genres/create`,
+  edit: (to: number | string = ':genreId'): string => `/genres/edit/${to}`,
+  index: (): string => '/genres',
+  view: (to: number | string = ':genreId'): string => `/genres/view/${to}`,
 }
 
 export const artistsBrowseRoutes = {
-  index: () => '/artists',
-  create: () => `/artists/create`,
-  view: (to: string | number = ':artistId') => `/artists/view/${to}`,
-  edit: (to: string | number = ':artistId') => `/artists/edit/${to}`,
+  create: (): string => `/artists/create`,
+  edit: (to: number | string = ':artistId'): string => `/artists/edit/${to}`,
+  index: (): string => '/artists',
+  view: (to: number | string = ':artistId'): string => `/artists/view/${to}`,
 }
 
 export const tracksBrowseRoutes = {
-  index: () => '/tracks',
-  create: () => `/tracks/create`,
-  view: (to: string | number = ':trackId') => `/tracks/view/${to}`,
-  edit: (to: string | number = ':trackId') => `/tracks/edit/${to}`,
+  create: (): string => `/tracks/create`,
+  edit: (to: number | string = ':trackId'): string => `/tracks/edit/${to}`,
+  index: (): string => '/tracks',
+  view: (to: number | string = ':trackId'): string => `/tracks/view/${to}`,
 }
 
 export const releasesBrowseRoutes = {
-  index: () => '/releases',
-  create: () => `/releases/create`,
-  view: (to: string | number = ':releaseId') => `/releases/view/${to}`,
-  edit: (to: string | number = ':releaseId') => `/releases/edit/${to}`,
+  create: (): string => `/releases/create`,
+  edit: (to: number | string = ':releaseId'): string => `/releases/edit/${to}`,
+  index: (): string => '/releases',
+  view: (to: number | string = ':releaseId'): string => `/releases/view/${to}`,
+}
+
+export const zvukDataBrowseRoutes = {
+  create: (): string => `/zvuk-data/create`,
+  index: (): string => '/zvuk-data',
+  sitemaps: (): string => `/zvuk-data/sitemaps`,
+  sitemapsCreate: (): string => `/zvuk-data/sitemaps/create`,
 }

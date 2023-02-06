@@ -1,8 +1,11 @@
+import { SnackbarProvider } from 'notistack'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { BrowserRouter } from 'react-router-dom'
+
 import App from './App'
+import AudioPlayerProvider from './providers/AudioPlayerProvider'
 import reportWebVitals from './reportWebVitals'
 
 const queryClient = new QueryClient({
@@ -13,14 +16,23 @@ const queryClient = new QueryClient({
   },
 })
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
+const root = ReactDOM.createRoot(document.querySelector('#root') as HTMLElement)
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <App />
-      </QueryClientProvider>
-    </BrowserRouter>
+    <AudioPlayerProvider>
+      <BrowserRouter>
+        <SnackbarProvider
+          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+          autoHideDuration={2000}
+          maxSnack={5}
+        >
+          <QueryClientProvider client={queryClient}>
+            <App />
+          </QueryClientProvider>
+        </SnackbarProvider>
+      </BrowserRouter>
+      {/* <Player /> */}
+    </AudioPlayerProvider>
   </React.StrictMode>
 )
 

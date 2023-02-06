@@ -1,14 +1,14 @@
-import { FC } from 'react'
+import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
-interface GenreFormProps {}
+const onSubmit = (data: any): void => {
+  console.log(data)
+}
 
-const GenreForm: FC<GenreFormProps> = () => {
+const GenreForm: FC = () => {
   const { handleSubmit } = useForm()
 
-  const onSubmit = () => {}
-
-  return <form onSubmit={handleSubmit(onSubmit)}></form>
+  return <form onSubmit={handleSubmit(onSubmit)} />
 }
 
 export default GenreForm

@@ -1,9 +1,10 @@
 import { Box, Button, FormControl, Grid, Paper, TextField, Typography } from '@mui/material'
-import { FC } from 'react'
+import type { FC } from 'react'
 import { useForm } from 'react-hook-form'
+
 import { PageHeader, PageTitle } from '../../../components/ui'
 import { useGenreEdit } from '../../../core/hooks'
-import { GenreModel } from '../../../core/models'
+import type { GenreModel } from '../../../core/models'
 import { MainLayout } from '../../../layouts'
 
 const GenreEditPage: FC = () => {
@@ -16,22 +17,20 @@ const GenreEditPage: FC = () => {
 
   const { onSubmit, isLoading } = useGenreEdit(setValue)
 
-  console.log(errors)
-
   return (
     <MainLayout>
       <PageHeader left={<PageTitle title="Редактировать жанр" />} showBackButton />
       {!isLoading && (
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
+        <Grid spacing={2} container>
+          <Grid xs={6} item>
             <Paper sx={{ p: 2 }}>
               <form onSubmit={handleSubmit(onSubmit)}>
-                <Typography variant="h6" marginBottom={2}>
+                <Typography marginBottom={2} variant="h6">
                   Основное
                 </Typography>
 
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
+                <Grid spacing={2} container>
+                  <Grid xs={6} item>
                     <FormControl sx={{ mb: 2 }} fullWidth>
                       <TextField
                         label="Id"
@@ -43,7 +42,7 @@ const GenreEditPage: FC = () => {
                       />
                     </FormControl>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid xs={6} item>
                     <FormControl sx={{ mb: 2 }} fullWidth>
                       <TextField
                         label="Slug"
@@ -56,8 +55,8 @@ const GenreEditPage: FC = () => {
                   </Grid>
                 </Grid>
 
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
+                <Grid spacing={2} container>
+                  <Grid xs={6} item>
                     <FormControl sx={{ mb: 2 }} fullWidth>
                       <TextField
                         label="Название"
@@ -68,7 +67,7 @@ const GenreEditPage: FC = () => {
                       />
                     </FormControl>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid xs={6} item>
                     <FormControl sx={{ mb: 2 }} fullWidth>
                       <TextField label="Краткое название" variant="outlined" {...register('shortName')} />
                     </FormControl>
@@ -79,23 +78,23 @@ const GenreEditPage: FC = () => {
                   <TextField label="Родительский жанр" variant="outlined" {...register('parentId')} />
                 </FormControl>
 
-                <Typography variant="h6" marginBottom={2}>
+                <Typography marginBottom={2} variant="h6">
                   Источник
                 </Typography>
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
+                <Grid spacing={2} container>
+                  <Grid xs={6} item>
                     <FormControl sx={{ mb: 2 }} fullWidth>
                       <TextField label="Source Id" variant="outlined" {...register('sourceId')} disabled />
                     </FormControl>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid xs={6} item>
                     <FormControl sx={{ mb: 2 }} fullWidth>
                       <TextField label="Parent Source Id" variant="outlined" {...register('parentSourceId')} disabled />
                     </FormControl>
                   </Grid>
                 </Grid>
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                  <Button variant="contained" type="submit">
+                  <Button type="submit" variant="contained">
                     Сохранить
                   </Button>
                 </Box>

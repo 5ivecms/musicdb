@@ -1,13 +1,22 @@
-import { FC } from 'react'
-import { Link, useParams } from 'react-router-dom'
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Delete, Edit } from '@mui/icons-material'
-import { Box, Button, SxProps, Typography } from '@mui/material'
+import type { SxProps } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
+import type { FC } from 'react'
+import { Link, useParams } from 'react-router-dom'
+
+import { InfoTable, PageContent } from '../../../components/common'
+import type { InfoTableColumn } from '../../../components/common/infoTable/info-table.interfaces'
 import { PageHeader, PageTitle } from '../../../components/ui'
 import { genresBrowseRoutes } from '../../../core/config'
-import { MainLayout } from '../../../layouts'
 import { useGenre } from '../../../core/hooks'
-import { InfoTable, PageContent } from '../../../components/common'
-import { InfoTableColumn } from '../../../components/common/infoTable/info-table.interfaces'
+import { MainLayout } from '../../../layouts'
+
+const actionButtons: SxProps = {
+  '& > button': { ml: 1 },
+}
 
 const columns: InfoTableColumn[] = [
   { field: 'id', headerName: 'ID' },
@@ -29,27 +38,23 @@ const GenreViewPage: FC = () => {
     <MainLayout>
       <PageContent loading={isLoading}>
         <PageHeader
-          showBackButton
           left={<PageTitle title={`Жанр ${data?.name}`} />}
           right={
             <Box sx={actionButtons}>
-              <Button variant="contained" component={Link} to={genresBrowseRoutes.edit(genreId)} endIcon={<Edit />}>
+              <Button component={Link} endIcon={<Edit />} to={genresBrowseRoutes.edit(genreId)} variant="contained">
                 Редактировать
               </Button>
-              <Button variant="contained" color="error" endIcon={<Delete />}>
+              <Button color="error" endIcon={<Delete />} variant="contained">
                 Удалить
               </Button>
             </Box>
           }
+          showBackButton
         />
-        <InfoTable data={data} columns={columns} thWidth={200} />
+        <InfoTable columns={columns} data={data} thWidth={200} />
       </PageContent>
     </MainLayout>
   )
-}
-
-const actionButtons: SxProps = {
-  '& > button': { ml: 1 },
 }
 
 export default GenreViewPage
