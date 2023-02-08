@@ -95,14 +95,17 @@ const filters: DataGridFilterDef<TrackModel>[] = [
   } */
 ]
 
+// TODO: перенести поулчение связей в хук поиска. Связи можно получить из текущих фильтров
 const getRelations = (filtersParams: DataGridFilterDef<TrackModel>[]): object => {
   const relations = filtersParams.reduce((acc, item) => {
     const fieldParts = item.name.split('.')
     if (fieldParts.length === 1) {
       return acc
     }
+
     fieldParts.pop()
     const relation = fieldParts.join('.')
+
     return { ...acc, [relation]: true }
   }, {})
   return dot.object(relations)
@@ -127,6 +130,7 @@ const TracksIndexPage: FC = () => {
           </Button>
         }
       />
+
       <DataGrid columns={columns} filters={filters} {...useTrackSearch(getRelations(filters))} />
     </MainLayout>
   )

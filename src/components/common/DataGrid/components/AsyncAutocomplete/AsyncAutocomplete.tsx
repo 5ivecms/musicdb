@@ -25,6 +25,11 @@ const AsyncAutocomplete = (props: AsyncAutocompleteProps): ReactElement => {
   }
 
   const handleChange = (e: SyntheticEvent<Element, Event>, value: { label: string; value: string } | null): void => {
+    if (value === null) {
+      onChange('')
+      return
+    }
+
     if (value) {
       onChange(value.value)
     }
