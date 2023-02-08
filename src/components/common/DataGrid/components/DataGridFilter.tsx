@@ -25,7 +25,8 @@ const DataGridFilter = <T extends BaseItem>(): ReactElement => {
   }
 
   useEffect(() => {
-    setSearch({ ...search, ...filterParams(debouncedParams) })
+    const newSearchParams = { ...filterParams({ ...search, ...debouncedParams }) }
+    setSearch(newSearchParams)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedParams, setSearch])
 

@@ -19,7 +19,7 @@ import type { DataGridFilterDef } from '../../../components/common/DataGrid/type
 import { PageHeader, PageTitle } from '../../../components/ui'
 import { tracksBrowseRoutes } from '../../../core/config'
 import { useTrackSearch } from '../../../core/hooks/tracks'
-import type { TrackModel } from '../../../core/models'
+import type { ArtistModel, TrackModel } from '../../../core/models'
 import { ArtistService } from '../../../core/services/artist.service'
 import { MainLayout } from '../../../layouts'
 
@@ -43,20 +43,24 @@ const columns = [
     minSize: 300,
     size: 100,
   }),
-  /*  columnHelper.accessor('artists.id', {
-    cell: ({ row }) => {
-      return row.original.artists.map((artist: any) => <div key={`${row.original.id}${artist.id}`}>{artist.title}</div>)
-    },
-    header: () => 'Исполнители',
-  }), */
   columnHelper.accessor('artists.id', {
     cell: ({ row }) => {
-      return row.original.artists.map((artist: any) => <div key={`${row.original.id}${artist.id}`}>{artist.title}</div>)
+      return row.original.artists.map((artist: ArtistModel) => (
+        <div key={`${row.original.id}${artist.id}`}>{artist.title}</div>
+      ))
+    },
+    header: () => 'Исполнители',
+  }),
+  /* columnHelper.accessor('artists.id', {
+    cell: ({ row }) => {
+      return row.original.artists.map((artist: ArtistModel) => (
+        <div key={`${row.original.id}${artist.id}`}>{artist.title}</div>
+      ))
     },
     header: () => 'Исполнители',
     minSize: 300,
     size: 100,
-  }),
+  }), */
 ]
 
 const filters: DataGridFilterDef<TrackModel>[] = [
