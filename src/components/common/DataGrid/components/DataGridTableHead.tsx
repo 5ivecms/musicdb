@@ -34,6 +34,8 @@ const DataGridTableHead = <T extends BaseItem>({ headerGroups }: DataGridTableHe
           <TableRow key={headerGroup.id} sx={{ backgroundColor: grey[100] }}>
             <TableCell />
             {headerGroup.headers.map((header) => {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+              const orderKey = (header.column.columnDef as LEGAL_ANY).accessorKey as string
               return (
                 <TableCell
                   {...{
@@ -43,14 +45,13 @@ const DataGridTableHead = <T extends BaseItem>({ headerGroups }: DataGridTableHe
                   }}
                 >
                   <TableSortLabel
-                    active={orderBy === header.id}
-                    direction={orderBy === header.id ? order : 'asc'}
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-                    onClick={onSort(String((header.column.columnDef as LEGAL_ANY).accessorKey))}
+                    active={orderBy === orderKey}
+                    direction={orderBy === orderKey ? order : 'asc'}
+                    onClick={onSort(orderKey)}
                     sx={{ fontWeight: 'bold' }}
                   >
                     {header.isPlaceholder ? undefined : flexRender(header.column.columnDef.header, header.getContext())}
-                    {orderBy === header.id ? (
+                    {orderBy === orderKey ? (
                       <Box component="span" sx={visuallyHidden}>
                         {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                       </Box>
