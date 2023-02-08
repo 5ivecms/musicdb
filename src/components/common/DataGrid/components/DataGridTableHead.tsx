@@ -10,7 +10,7 @@ import { useContext } from 'react'
 
 import type { DataGridContextState } from '../DataGridContext'
 import { DataGridContext } from '../DataGridContext'
-import type { BaseItem } from '../types'
+import type { BaseItem, LEGAL_ANY } from '../types'
 
 interface DataGridTableHeadProps<T extends BaseItem = BaseItem> {
   headerGroups: HeaderGroup<T>[]
@@ -22,7 +22,8 @@ const DataGridTableHead = <T extends BaseItem>({ headerGroups }: DataGridTableHe
 
   const onSort = (property: string) => () => {
     const isAsc = orderBy === property && order === 'asc'
-    setOrder(isAsc ? 'desc' : 'asc')
+    const newOrder = isAsc ? 'desc' : 'asc'
+    setOrder(newOrder)
     setOrderBy(property)
   }
 
@@ -38,15 +39,14 @@ const DataGridTableHead = <T extends BaseItem>({ headerGroups }: DataGridTableHe
                   {...{
                     colSpan: header.colSpan,
                     key: header.id,
-                    style: {
-                      width: header.getSize(),
-                    },
+                    style: { width: header.getSize() },
                   }}
                 >
                   <TableSortLabel
                     active={orderBy === header.id}
                     direction={orderBy === header.id ? order : 'asc'}
-                    onClick={onSort(header.id)}
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                    onClick={onSort(String((header.column.columnDef as LEGAL_ANY).accessorKey))}
                     sx={{ fontWeight: 'bold' }}
                   >
                     {header.isPlaceholder ? undefined : flexRender(header.column.columnDef.header, header.getContext())}

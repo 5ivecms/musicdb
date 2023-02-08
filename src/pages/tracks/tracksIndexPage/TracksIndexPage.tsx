@@ -91,8 +91,8 @@ const filters: DataGridFilterDef<TrackModel>[] = [
   /* {
     name: 'release.genres.id',
     placeholder: 'Жанр',
-    type: 'text'
-  } */
+    type: 'text',
+  }, */
 ]
 
 // TODO: перенести поулчение связей в хук поиска. Связи можно получить из текущих фильтров

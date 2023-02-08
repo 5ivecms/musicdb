@@ -24,8 +24,7 @@ export const useTrackSearch = (relations?: object): UseTrackSearch => {
     () => TrackService.search({ order, orderBy, page, relations, search: debouncedSearch }),
     {
       keepPreviousData: true,
-      onError: (error) => {
-        console.error(error)
+      onError: () => {
         enqueueSnackbar('Ошибка при получении списка треков', {
           variant: 'error',
         })

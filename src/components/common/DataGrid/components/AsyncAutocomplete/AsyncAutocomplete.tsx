@@ -20,7 +20,7 @@ const AsyncAutocomplete = (props: AsyncAutocompleteProps): ReactElement => {
 
   const loading = open && options.length === 0
 
-  const handleInputChange = (e: SyntheticEvent<Element, Event>, value: string): void => {
+  const handleInputChange = (_: SyntheticEvent<Element, Event>, value: string): void => {
     setSearchText(value)
   }
 
