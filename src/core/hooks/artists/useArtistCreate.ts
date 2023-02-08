@@ -7,7 +7,12 @@ import { artistsBrowseRoutes } from '../../config'
 import { ZvukService } from '../../services'
 import type { CreateArtistFields } from '../../types/artist'
 
-export const useArtistCreate = (): any => {
+type UseArtistCreate = {
+  isLoading: boolean
+  onSubmit: (data: CreateArtistFields) => Promise<void>
+}
+
+export const useArtistCreate = (): UseArtistCreate => {
   const { enqueueSnackbar } = useSnackbar()
   const navigate = useNavigate()
 

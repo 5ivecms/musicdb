@@ -30,20 +30,20 @@ const columns = [
     cell: (info) => info.getValue(),
     header: () => 'ID',
     minSize: 200,
-    size: 200
+    size: 200,
   }),
   columnHelper.accessor('title', {
     cell: (info) => info.getValue(),
     header: () => 'Название',
-    size: 1000
+    size: 1000,
   }),
   columnHelper.accessor('credits', {
     cell: (info) => info.getValue(),
     header: () => 'Исполнители',
     minSize: 300,
-    size: 100
+    size: 100,
   }),
- /*  columnHelper.accessor('artists.id', {
+  /*  columnHelper.accessor('artists.id', {
     cell: ({ row }) => {
       return row.original.artists.map((artist: any) => <div key={`${row.original.id}${artist.id}`}>{artist.title}</div>)
     },
@@ -55,7 +55,7 @@ const columns = [
     },
     header: () => 'Исполнители',
     minSize: 300,
-    size: 100
+    size: 100,
   }),
 ]
 
@@ -93,13 +93,13 @@ const filters: DataGridFilterDef<TrackModel>[] = [
 
 const getRelations = (filtersParams: DataGridFilterDef<TrackModel>[]): object => {
   const relations = filtersParams.reduce((acc, item) => {
-      const fieldParts = item.name.split('.')
-      if (fieldParts.length === 1) {
-        return acc
-      }
-      fieldParts.pop()
-      const relation = fieldParts.join('.')
-      return {...acc, [relation]: true}
+    const fieldParts = item.name.split('.')
+    if (fieldParts.length === 1) {
+      return acc
+    }
+    fieldParts.pop()
+    const relation = fieldParts.join('.')
+    return { ...acc, [relation]: true }
   }, {})
   return dot.object(relations)
 }

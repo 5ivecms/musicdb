@@ -9,7 +9,12 @@ import type { GenreModel } from '../../models'
 import { GenreService } from '../../services/genre.service'
 import { getKeys } from '../../utils'
 
-export const useGenreEdit = (setValue: UseFormSetValue<GenreModel>): any => {
+type UseGenreEdit = {
+  isLoading: boolean
+  onSubmit: SubmitHandler<GenreModel>
+}
+
+export const useGenreEdit = (setValue: UseFormSetValue<GenreModel>): UseGenreEdit => {
   const params = useParams()
   const genreId = String(params.genreId)
 

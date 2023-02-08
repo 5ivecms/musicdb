@@ -29,6 +29,10 @@
     "unused-imports"
   ],
   "rules": {
+    "prettier/prettier": [
+      "error",
+      { "endOfLine": "auto" }
+    ],
     "@typescript-eslint/await-thenable": "error",
     "@typescript-eslint/consistent-indexed-object-style": "error",
     "@typescript-eslint/consistent-type-imports": [
