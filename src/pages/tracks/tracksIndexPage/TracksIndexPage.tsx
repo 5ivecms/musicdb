@@ -68,7 +68,7 @@ const TracksIndexPage: FC = () => {
     console.log(id)
   }, [])
 
-  const handleDeleteMany = useCallback((ids: string) => {
+  const handleDeleteMany = useCallback((ids: number[]) => {
     console.log(ids)
   }, [])
 
@@ -83,7 +83,13 @@ const TracksIndexPage: FC = () => {
         }
       />
 
-      <DataGrid columns={columns} filters={filters} {...useTrackSearch(getRelations(filters))} />
+      <DataGrid
+        columns={columns}
+        filters={filters}
+        onDelete={handleDelete}
+        onDeleteMany={handleDeleteMany}
+        {...useTrackSearch(getRelations(filters))}
+      />
     </MainLayout>
   )
 }

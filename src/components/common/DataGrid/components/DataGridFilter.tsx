@@ -14,7 +14,7 @@ import { AsyncAutocomplete } from './AsyncAutocomplete'
 
 const DataGridFilter = <T extends BaseItem>(): ReactElement => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  const { setSearch, search, filters, selectedRows, data, handleSelectAll } =
+  const { setSearch, search, filters, selectedRows, data, handleSelectAll, onDeleteMany } =
     useContext<DataGridContextState<T>>(DataGridContext)
   const limit = data?.limit || DEFAULT_LIMIT
   const [params, setParams] = useState<Search>({})
@@ -90,8 +90,8 @@ const DataGridFilter = <T extends BaseItem>(): ReactElement => {
 
         <TableCell sx={{ py: 1 }}>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
-            {selectedRows.length > 0 && (
-              <IconButton color="error">
+            {onDeleteMany !== undefined && selectedRows.length > 0 && (
+              <IconButton color="error" onClick={() => onDeleteMany(selectedRows)}>
                 <Delete />
               </IconButton>
             )}

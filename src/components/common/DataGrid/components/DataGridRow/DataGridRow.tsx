@@ -8,7 +8,7 @@ import { memo } from 'react'
 import type { BaseItem } from '../../types'
 import ActionsCell from '../ActionsCell'
 
-interface DataGridRowProps<T> {
+interface DataGridRowProps<T extends BaseItem = BaseItem> {
   onSelectRow: (id: number) => (_: MouseEvent<HTMLButtonElement>) => void
   row: Row<T>
   selected: boolean
