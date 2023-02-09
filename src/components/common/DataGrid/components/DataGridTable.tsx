@@ -1,16 +1,16 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable import/no-extraneous-dependencies */
-import { Checkbox, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material'
-import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
+import { Paper, Table, TableBody, TableContainer } from '@mui/material'
+import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import type { MouseEvent, ReactElement } from 'react'
 import { useCallback, useContext } from 'react'
 
 import type { DataGridContextState } from '../DataGridContext'
 import { DataGridContext } from '../DataGridContext'
 import type { BaseItem } from '../types'
-import ActionsCell from './ActionsCell'
 import DataGridFilter from './DataGridFilter'
 import { DataGridPagination } from './DataGridPagination'
+import DataGridRow from './DataGridRow/DataGridRow'
 import DataGridTableHead from './DataGridTableHead'
 
 const DataGridTable = <T extends BaseItem>(): ReactElement => {
@@ -46,28 +46,7 @@ const DataGridTable = <T extends BaseItem>(): ReactElement => {
           <TableBody>
             {table.getRowModel().rows.map((row) => {
               const selected = isSelected(Number(row.original.id))
-              return (
-                <TableRow key={row.id} selected={selected} hover>
-                  <TableCell padding="checkbox">
-                    <Checkbox checked={selected} color="primary" onClick={onSelectRow(Number(row.original.id))} />
-                  </TableCell>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell
-                      {...{
-                        key: cell.id,
-                        style: {
-                          width: cell.column.getSize(),
-                        },
-                      }}
-                    >
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
-                  ))}
-                  <TableCell>
-                    <ActionsCell item={row.original} />
-                  </TableCell>
-                </TableRow>
-              )
+              return <DataGridRow key={row.id} onSelectRow={onSelectRow} row={row} selected={selected} />
             })}
           </TableBody>
         </Table>
