@@ -1,4 +1,5 @@
-import { Checkbox, MenuItem, TableCell, TableHead, TableRow, TextField } from '@mui/material'
+import { Delete } from '@mui/icons-material'
+import { Box, Checkbox, IconButton, MenuItem, TableCell, TableHead, TableRow, TextField } from '@mui/material'
 import type { ChangeEvent, ReactElement } from 'react'
 import { useContext, useEffect, useState } from 'react'
 
@@ -86,7 +87,16 @@ const DataGridFilter = <T extends BaseItem>(): ReactElement => {
             </TableCell>
           )
         })}
-        <TableCell />
+
+        <TableCell sx={{ py: 1 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+            {selectedRows.length > 0 && (
+              <IconButton color="error">
+                <Delete />
+              </IconButton>
+            )}
+          </Box>
+        </TableCell>
       </TableRow>
     </TableHead>
   ) : (
