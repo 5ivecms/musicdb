@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable import/no-extraneous-dependencies */
-import { Paper, Table, TableBody, TableContainer } from '@mui/material'
+import { Table, TableBody, TableContainer } from '@mui/material'
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import type { MouseEvent, ReactElement } from 'react'
 import { useCallback, useContext } from 'react'
@@ -38,21 +38,19 @@ const DataGridTable = <T extends BaseItem>(): ReactElement => {
   )
 
   return (
-    <Paper>
-      <TableContainer>
-        <Table>
-          <DataGridTableHead headerGroups={table.getHeaderGroups()} />
-          <DataGridFilter />
-          <TableBody>
-            {table.getRowModel().rows.map((row) => {
-              const selected = isSelected(Number(row.original.id))
-              return <DataGridRow key={row.id} onSelectRow={onSelectRow} row={row} selected={selected} />
-            })}
-          </TableBody>
-        </Table>
-        <DataGridPagination />
-      </TableContainer>
-    </Paper>
+    <TableContainer>
+      <Table>
+        <DataGridTableHead headerGroups={table.getHeaderGroups()} />
+        <DataGridFilter />
+        <TableBody>
+          {table.getRowModel().rows.map((row) => {
+            const selected = isSelected(Number(row.original.id))
+            return <DataGridRow key={row.id} onSelectRow={onSelectRow} row={row} selected={selected} />
+          })}
+        </TableBody>
+      </Table>
+      <DataGridPagination />
+    </TableContainer>
   )
 }
 

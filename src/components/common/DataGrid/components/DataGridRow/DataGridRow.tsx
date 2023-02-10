@@ -8,17 +8,13 @@ import { memo } from 'react'
 import type { BaseItem } from '../../types'
 import ActionsCell from '../ActionsCell'
 
-interface DataGridRowProps<T extends BaseItem = BaseItem> {
+interface DataGridRowProps<T> {
   onSelectRow: (id: number) => (_: MouseEvent<HTMLButtonElement>) => void
   row: Row<T>
   selected: boolean
 }
 
-const DataGridRow = <T extends BaseItem = BaseItem>({
-  selected,
-  row,
-  onSelectRow,
-}: DataGridRowProps<T>): ReactElement => {
+const DataGridRow = <T extends BaseItem>({ selected, row, onSelectRow }: DataGridRowProps<T>): ReactElement => {
   return (
     <TableRow selected={selected} hover>
       <TableCell padding="checkbox">

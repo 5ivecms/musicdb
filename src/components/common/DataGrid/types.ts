@@ -75,6 +75,8 @@ export interface DataGridProps<T extends BaseItem = BaseItem> extends SearchOpti
   columns: ColumnDef<T, LEGAL_ANY>[]
   data?: { items: T[]; limit: number; page: number; total: number }
   filters?: DataGridFilterDef<T>[]
+  isFetching?: boolean
+  isLoading?: boolean
   onDelete?: (id: number) => void
   onDeleteMany?: (ids: number[]) => void
 }
