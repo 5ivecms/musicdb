@@ -1,4 +1,4 @@
-import { Delete } from '@mui/icons-material'
+import { Delete, FilterAltOff } from '@mui/icons-material'
 import { Box, Checkbox, IconButton, MenuItem, TableCell, TableHead, TableRow, TextField } from '@mui/material'
 import type { ChangeEvent, ReactElement } from 'react'
 import { useContext, useEffect, useState } from 'react'
@@ -25,11 +25,18 @@ const DataGridFilter = <T extends BaseItem>(): ReactElement => {
     setParams((prev) => ({ ...prev, [name]: value }))
   }
 
+  const handleResetFilter = (): void => {
+    setParams({})
+    setSearch({})
+  }
+
   useEffect(() => {
     const newSearchParams = { ...filterParams({ ...search, ...debouncedParams }) }
     setSearch(newSearchParams)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedParams, setSearch])
+
+  console.log(search)
 
   return filters !== undefined && filters.length > 0 ? (
     <TableHead>
@@ -54,6 +61,7 @@ const DataGridFilter = <T extends BaseItem>(): ReactElement => {
                   placeholder={filter?.placeholder || ''}
                   size="small"
                   type="text"
+                  value={params[String(filter.name)] || ''}
                   fullWidth
                 />
               )}
@@ -89,12 +97,21 @@ const DataGridFilter = <T extends BaseItem>(): ReactElement => {
         })}
 
         <TableCell sx={{ py: 1 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
-            {onDeleteMany !== undefined && selectedRows.length > 0 && (
-              <IconButton color="error" onClick={() => onDeleteMany(selectedRows)}>
-                <Delete />
-              </IconButton>
-            )}
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+            <Box>
+              {Object.keys(params).length > 0 && (
+                <IconButton color="default" onClick={handleResetFilter}>
+                  <FilterAltOff />
+                </IconButton>
+              )}
+            </Box>
+            <Box>
+              {onDeleteMany !== undefined && selectedRows.length > 0 && (
+                <IconButton color="error" onClick={() => onDeleteMany(selectedRows)}>
+                  <Delete />
+                </IconButton>
+              )}
+            </Box>
           </Box>
         </TableCell>
       </TableRow>
