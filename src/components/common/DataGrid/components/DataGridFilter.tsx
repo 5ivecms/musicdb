@@ -36,8 +36,6 @@ const DataGridFilter = <T extends BaseItem>(): ReactElement => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedParams, setSearch])
 
-  console.log(search)
-
   return filters !== undefined && filters.length > 0 ? (
     <TableHead>
       <TableRow>
