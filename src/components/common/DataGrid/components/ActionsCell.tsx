@@ -15,14 +15,19 @@ export interface ActionsCellProps<T extends BaseItem = BaseItem> extends ActionC
 
 const ActionsCell = <T extends BaseItem>({ item }: ActionsCellProps<T>): ReactElement => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  const { onDelete } = useContext<DataGridContextState<T>>(DataGridContext)
+  const { onDelete, setCurrentDeleteId, setShowDeleteDialog } = useContext<DataGridContextState<T>>(DataGridContext)
+
+  const handleDelete = (): void => {
+    setCurrentDeleteId(item.id)
+    setShowDeleteDialog(true)
+  }
 
   return (
     <Stack direction="row" spacing={0}>
       <ButtonActionView item={item} />
       <ButtonActionEdit item={item} />
       {onDelete !== undefined && (
-        <IconButton color="error" onClick={() => onDelete(item.id)}>
+        <IconButton color="error" onClick={handleDelete}>
           <Delete />
         </IconButton>
       )}

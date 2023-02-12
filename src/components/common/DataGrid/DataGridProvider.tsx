@@ -8,6 +8,9 @@ import type { BaseItem, DataGridProviderProps } from './types'
 const DataGridProvider = <T extends BaseItem = BaseItem>(props: DataGridProviderProps<T>): ReactElement => {
   const { children, ...contextProps } = props
   const [selectedRows, setSelectedRows] = useState<number[]>([])
+  const [currentDeleteId, setCurrentDeleteId] = useState<number | undefined>()
+  const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false)
+  const [showDeleteManyDialog, setShowDeleteManyDialog] = useState<boolean>(false)
 
   const handleSelectAll = useCallback(
     (event: ChangeEvent<HTMLInputElement>): void => {
@@ -22,8 +25,30 @@ const DataGridProvider = <T extends BaseItem = BaseItem>(props: DataGridProvider
   )
 
   const contextValue: DataGridContextState<T> = useMemo(
-    () => ({ ...contextProps, handleSelectAll, selectedRows, setSelectedRows }),
-    [contextProps, selectedRows, setSelectedRows, handleSelectAll]
+    () => ({
+      ...contextProps,
+      currentDeleteId,
+      handleSelectAll,
+      selectedRows,
+      setCurrentDeleteId,
+      setSelectedRows,
+      setShowDeleteDialog,
+      setShowDeleteManyDialog,
+      showDeleteDialog,
+      showDeleteManyDialog,
+    }),
+    [
+      contextProps,
+      selectedRows,
+      setSelectedRows,
+      handleSelectAll,
+      currentDeleteId,
+      setCurrentDeleteId,
+      setShowDeleteDialog,
+      setShowDeleteManyDialog,
+      showDeleteDialog,
+      showDeleteManyDialog,
+    ]
   )
 
   return <DataGridContext.Provider value={contextValue}>{children}</DataGridContext.Provider>

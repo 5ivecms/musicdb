@@ -11,15 +11,25 @@ interface DataGridDialogProps {
   yesText?: string
 }
 
-const DataGridDialog: FC<DataGridDialogProps> = ({ noText, open, onClose, onConfirm, text, title, yesText }) => (
+const DataGridDialog: FC<DataGridDialogProps> = ({
+  noText = 'Нет',
+  open,
+  onClose,
+  onConfirm,
+  text,
+  title,
+  yesText = 'Да',
+}) => (
   <Dialog onClose={onClose} open={open}>
     <DialogTitle>{title}</DialogTitle>
     <DialogContent>
       <DialogContentText>{text}</DialogContentText>
     </DialogContent>
     <DialogActions>
-      <Button onClick={onClose}>{noText}</Button>
-      <Button onClick={onConfirm} autoFocus>
+      <Button onClick={onClose} variant="outlined">
+        {noText}
+      </Button>
+      <Button color="error" onClick={onConfirm} variant="contained" autoFocus>
         {yesText}
       </Button>
     </DialogActions>
