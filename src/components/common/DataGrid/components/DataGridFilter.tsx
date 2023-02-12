@@ -14,8 +14,17 @@ import { AsyncAutocomplete } from './AsyncAutocomplete'
 
 const DataGridFilter = <T extends BaseItem>(): ReactElement => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  const { setSearch, search, filters, selectedRows, data, handleSelectAll, onDeleteMany, setShowDeleteManyDialog } =
-    useContext<DataGridContextState<T>>(DataGridContext)
+  const {
+    setSearch,
+    search,
+    filters,
+    selectedRows,
+    data,
+    handleSelectAll,
+    onDeleteMany,
+    setShowDeleteManyDialog,
+    setPage,
+  } = useContext<DataGridContextState<T>>(DataGridContext)
   const limit = data?.limit || DEFAULT_LIMIT
   const [params, setParams] = useState<Search>({})
   const debouncedParams = useDebounce(params, 500)
@@ -37,6 +46,7 @@ const DataGridFilter = <T extends BaseItem>(): ReactElement => {
   useEffect(() => {
     const newSearchParams = { ...filterParams({ ...search, ...debouncedParams }) }
     setSearch(newSearchParams)
+    setPage(1)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedParams, setSearch])
 
